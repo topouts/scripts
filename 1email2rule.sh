@@ -21,21 +21,21 @@ else
 	#	Loop through each line and compare the email to the previous one.
 	#	 If equal, move line to new file
 	LC=$(cat $FID | wc -l)  #Capture the line count
-	echo $LC
+    #	echo DEBUG:$LC
 	
 	em0=''
     em1=''
     for (( i=1; i<=$LC; i++))
 	do
-        echo $i
+        #echo DEBUG:$i
         line=$(sed -n "$i"p $FID)
 		em1=$(echo $line | cut -d '@' -f 1)
-		echo $em1i
+		#echo DEBUG:$em1i
 		if [ "$em0" = "$em1" ]; then
-		    echo Duplicate, move to new file
+		    #echo DEBUG: Duplicate, move to new file
             echo $line >> $1.d
 		else
-	 		echo not a duplicate or first
+	 		#echo DEBUG: not a duplicate or first
             sed -n "$i"p $FID >> $1.out
 		fi	
 
@@ -55,8 +55,8 @@ else
             fi
     fi
    
-    echo 'Removing temp files: '
-    rm *.d
+    #echo 'DEBUG: Removing temp files: '
+    rm *.d 2>/dev/null
 fi
 
 
